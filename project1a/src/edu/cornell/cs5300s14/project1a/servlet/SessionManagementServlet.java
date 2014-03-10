@@ -29,6 +29,7 @@ public class SessionManagementServlet extends HttpServlet {
 	private static SessionTable sessionTable = new SessionTable();
     public SessionManagementServlet() {
         super();
+        startSessionCollectedDaemon();
     }
 
 	/**
@@ -78,5 +79,23 @@ public class SessionManagementServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	private void startSessionCollectedDaemon(){
+		Thread sessionCollectordaemonThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+            	while(true){
+            		try {
+    					Thread.sleep(1000);
+    				} catch (InterruptedException e) {
+    					e.printStackTrace();
+    				}
+                    sessionTable.removeExpiredSessions();
+            	}
+            }
+        });
+        sessionCollectordaemonThread.setDaemon(true);
+        sessionCollectordaemonThread.start();
 	}
 }

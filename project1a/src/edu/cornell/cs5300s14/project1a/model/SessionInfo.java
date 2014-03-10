@@ -12,7 +12,7 @@ public class SessionInfo implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -6602062922504148262L;
-	private static final int maxAge = 3600;
+	private static final int maxAge = 10;
 	private static String initialMsg = "Hello, User!";
 	
 	public static int getMaxage() {
