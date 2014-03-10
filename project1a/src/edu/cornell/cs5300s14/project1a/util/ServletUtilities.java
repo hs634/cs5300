@@ -1,7 +1,6 @@
 package edu.cornell.cs5300s14.project1a.util;
 
-import java.io.UnsupportedEncodingException;
-
+import java.util.UUID;
 import javax.servlet.http.Cookie;
 
 public class ServletUtilities {
@@ -27,13 +26,7 @@ public class ServletUtilities {
   }
   
   public static String generateSessionId() {
-	    String uid = new java.rmi.server.UID().toString();  // guaranteed unique
-	    try {
-			uid = java.net.URLEncoder.encode(uid, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}  // encode any special chars
-	    return uid;
+	    return UUID.randomUUID().toString();
   }
   public static String createUpdateVersion(String sPrevVersion){
 	  Integer iVersion = 1;
