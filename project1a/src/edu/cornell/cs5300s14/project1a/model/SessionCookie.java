@@ -14,11 +14,14 @@ public class SessionCookie extends Cookie {
 	private String version;
 	private LocationMetadata locationMetadata;
 
-	public SessionCookie(String sessionId, String version, LocationMetadata lm) {
+	public SessionCookie(String sessionId, String version, LocationMetadata lm, String path, boolean httpOnly, int maxAge) {
 		super(cookieName, sessionId);
 		this.sessionId = sessionId;
 		this.version = version;
 		this.locationMetadata = lm;
+		this.setPath(path);
+		this.setHttpOnly(httpOnly);
+		this.setMaxAge(maxAge);
 	}
 	
 	public String toString(){

@@ -22,7 +22,6 @@ import edu.cornell.cs5300s14.project1a.util.ServletUtilities;
 @WebServlet("")
 public class SessionManagementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String initialMsg = "Hello, User!";
        
     /**
      * @see HttpServletHttpServlet()
@@ -41,9 +40,8 @@ public class SessionManagementServlet extends HttpServlet {
 		SessionInfo sessionInfo = null;
 		SessionCookie sessionCookie = null;
         if (sessionId == null) {
-        	sessionInfo = sessionTable.createUpdateSession(sessionId, initialMsg);
+        	sessionInfo = sessionTable.createUpdateSession(sessionId, SessionInfo.getInitialMsg());
         } else {
-        	
         	if(request.getMethod().equalsIgnoreCase("POST")){
         		String replaceValue = request.getParameter("btn-replace");
         		String refreshValue = request.getParameter("btn-refresh");
@@ -55,22 +53,17 @@ public class SessionManagementServlet extends HttpServlet {
         			sessionInfo = sessionTable.createUpdateSession(sessionId, null);
         		}else if(logoutValue!=null && !logoutValue.isEmpty()){
         			sessionTable.invalidate(sessionId);
-        			sessionCookie = new SessionCookie(sessionInfo.getSessionId(), sessionInfo.getVersion(), new LocationMetadata());
-                	sessionCookie.setPath("/");
-                	sessionCookie.setHttpOnly(true);
-                	sessionCookie.setMaxAge(0);
+        			sessionCookie = new SessionCookie(sessionId, "0", null, "/", true, 0);
                 	response.addCookie(sessionCookie);
                 	request.getRequestDispatcher("index.jsp").forward(request, response);
+                	return;
         		}
         	}else{
         		sessionInfo = sessionTable.createUpdateSession(sessionId, null);
         	}
         }
         if(sessionInfo != null){
-        	sessionCookie = new SessionCookie(sessionInfo.getSessionId(), sessionInfo.getVersion(), new LocationMetadata());
-        	sessionCookie.setPath("/");
-        	sessionCookie.setHttpOnly(true);
-        	sessionCookie.setMaxAge(SessionInfo.getMaxage());
+        	sessionCookie = new SessionCookie(sessionInfo.getSessionId(), sessionInfo.getVersion(), new LocationMetadata(), "/", true, SessionInfo.getMaxage());
         	response.addCookie(sessionCookie);
         	request.setAttribute("message", sessionInfo.getMessage());
     		request.setAttribute("sessionId", sessionInfo.getSessionId());

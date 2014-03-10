@@ -13,6 +13,7 @@ public class SessionInfo implements Serializable {
 	 */
 	private static final long serialVersionUID = -6602062922504148262L;
 	private static final int maxAge = 3600;
+	private static String initialMsg = "Hello, User!";
 	
 	public static int getMaxage() {
 		return maxAge;
@@ -71,6 +72,14 @@ public class SessionInfo implements Serializable {
 
 	public Date getExpireAt() {
 		return expireAt;
+	}
+
+	public static String getInitialMsg() {
+		return initialMsg;
+	}
+
+	public static void setInitialMsg(String initialMsg) {
+		SessionInfo.initialMsg = initialMsg;
 	}
 	
 }

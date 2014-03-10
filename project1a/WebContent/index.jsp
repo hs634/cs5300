@@ -18,7 +18,7 @@
 			<input type="submit" name="btn-refresh" value="Refresh" />
 		</div>
 		<div class="row">
-			<input type="submit" name="btn-replace" value="Logout" />
+			<input type="submit" name="btn-logout" value="Logout" />
 		</div>
 	</div>
 	<div>
