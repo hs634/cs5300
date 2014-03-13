@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row">
 			<input type="submit" name="btn-replace" value="Replace" />
-			<input type="text" maxlength="200" name="txt-message" />
+			<input type="text" maxlength="100" name="txt-message" style="width: 40%;"/>
 		</div>
 		<div class="row">
 			<input type="submit" name="btn-refresh" value="Refresh" />
@@ -21,7 +21,7 @@
 			<input type="submit" name="btn-logout" value="Logout" />
 		</div>
 	</div>
-	<div>
+	<div style="display:None;">
 		Session id: ${sessionId}
 		Version: ${version}
 		Expire At: ${expireAt}

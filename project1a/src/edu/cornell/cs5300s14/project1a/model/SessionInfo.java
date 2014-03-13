@@ -7,26 +7,44 @@ import java.util.GregorianCalendar;
 
 import edu.cornell.cs5300s14.project1a.util.ServletUtilities;
 
+/**
+ * @author harsh
+ * Class to store the session information on the server side
+ */
 public class SessionInfo implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -6602062922504148262L;
-	private static final int maxAge = 10;
+	
+	/**
+	 * maxAge value -- can be modified only here
+	 */
+	private static final int maxAge = 3600;
+	
+	/**
+	 * initial message to be shown to the user -- only to be modified here 
+	 */
 	private static String initialMsg = "Hello, User!";
 	
 	public static int getMaxage() {
 		return maxAge;
 	}
 
-	private String sessionId;
-	private String message;
-	private String version;
-	private Date createdAt;
-	private Date expireAt;
+	private String sessionId; //unique session ID
+	private String message;		// session State
+	private String version;		// Version
+	private Date createdAt;		// created at timestamp
+	private Date expireAt;		// expire at timestamp
 	
 	private SessionInfo(){}
 	
+	/**
+	 * Constructor with argument to initialize a session info object
+	 * @param sessionId
+	 * @param message
+	 * @param version
+	 * @param createdAt
+	 * @param expireAt
+	 */
 	private SessionInfo(String sessionId, String message, String version, Date createdAt, Date expireAt){
 		this.sessionId = sessionId;
 		this.message = message;
@@ -35,6 +53,12 @@ public class SessionInfo implements Serializable {
 		this.expireAt = expireAt;		
 	}
 	
+	/**
+	 * Method to create a new session. It calls the ServletUtilities to generate a unique sessionId
+	 * and creates a version with initial value of 1. Also set the created and expire timestamps
+	 * @param message
+	 * @return
+	 */
 	public static SessionInfo getNewSession(String message){
 		String sessionId = ServletUtilities.generateSessionId();
 		String version = ServletUtilities.createUpdateVersion(null);
@@ -44,6 +68,11 @@ public class SessionInfo implements Serializable {
 		return new SessionInfo(sessionId, message, version, createdAt, now.getTime());
 	}
 	
+	/**
+	 * updates the sessionInfo object. It updates the message if any and then sets the expire
+	 * timestamp to the current time and also increments the version
+	 * @param newMessage
+	 */
 	public void update(String newMessage){
 		if(newMessage!=null){
 			this.message = newMessage;
